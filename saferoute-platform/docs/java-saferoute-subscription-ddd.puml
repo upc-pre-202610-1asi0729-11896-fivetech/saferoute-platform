@@ -1,0 +1,84 @@
+@startuml
+skinparam monochrome false
+
+package "subscription.domain.model.aggregates" {
+  entity "Subscription" as Subscription <<AggregateRoot>> {
+    - id: SubscriptionId
+    - organizationId: OrganizationId
+    - planId: PlanId
+    - state: SubscriptionState
+    - startDate: LocalDateTime
+    - endDate: LocalDateTime
+    + activate(): void
+    + upgrade(planId: PlanId): void
+    + cancel(): void
+    + isActive(): boolean
+    + getPlanId(): PlanId
+    + getRemainingDays(): int
+    + getId(): SubscriptionId
+  }
+
+  entity "Plan" as Plan <<AggregateRoot>> {
+    - id: PlanId
+    - planTier: PlanTier
+    - routeQuota: RouteQuota
+    - driverQuota: DriverQuota
+    - price: Double
+    + getPlanName(): String
+    + getRouteLimit(): int
+    + getDriverLimit(): int
+    + isWithinRouteQuota(current: int): boolean
+    + isWithinDriverQuota(current: int): boolean
+    + getId(): PlanId
+  }
+}
+
+package "subscription.domain.model.valueobjects" {
+  class "SubscriptionState" as SubscriptionState <<ValueObject>> {
+    - value: String
+    + isActive(): boolean
+    + isExpired(): boolean
+    + isCancelled(): boolean
+    + toString(): String
+  }
+
+  class "PlanTier" as PlanTier <<ValueObject>> {
+    - value: String
+    + isBasic(): boolean
+    + isIntermediate(): boolean
+    + isComplete(): boolean
+    + toString(): String
+  }
+
+  class "RouteQuota" as RouteQuota <<ValueObject>> {
+    - maxRoutes: int
+    + isWithinLimit(current: int): boolean
+    + getMaxRoutes(): int
+  }
+
+  class "DriverQuota" as DriverQuota <<ValueObject>> {
+    - maxDrivers: int
+    + isWithinLimit(current: int): boolean
+    + getMaxDrivers(): int
+  }
+}
+
+package "shared.domain.model.valueobjects" {
+  class "OrganizationId" as SharedOrganizationId <<ValueObject>> {
+  }
+  class "SubscriptionId" as SharedSubscriptionId <<ValueObject>> {
+  }
+  class "PlanId" as SharedPlanId <<ValueObject>> {
+  }
+}
+
+Subscription "1" --> "1" SharedSubscriptionId : identified by
+Subscription "1" --> "1" SharedOrganizationId : belongs to
+Subscription "1" --> "1" SharedPlanId : references
+Subscription "1" --> "1" SubscriptionState : has
+Plan "1" --> "1" SharedPlanId : identified by
+Plan "1" --> "1" PlanTier : categorized by
+Plan "1" --> "1" RouteQuota : limits
+Plan "1" --> "1" DriverQuota : limits
+
+@enduml

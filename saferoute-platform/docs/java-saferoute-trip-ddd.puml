@@ -1,0 +1,111 @@
+@startuml
+skinparam monochrome false
+
+package "trip.domain.model.aggregates" {
+  entity "Trip" as Trip <<AggregateRoot>> {
+    - id: TripId
+    - organizationId: OrganizationId
+    - routeId: RouteId
+    - driverId: DriverId
+    - tripState: TripState
+    - startTime: LocalDateTime
+    - endTime: LocalDateTime
+    - attendances: List<Attendance>
+    - incidents: List<Incident>
+    + start(): void
+    + complete(): void
+    + recordBoarding(childId: ChildId, state: BoardingState): void
+    + reportIncident(description: IncidentDescription): void
+    + getAttendanceSummary(): List<Attendance>
+    + getIncidentLog(): List<Incident>
+    + isInProgress(): boolean
+    + getId(): TripId
+  }
+}
+
+package "trip.domain.model.entities" {
+  entity "Attendance" as Attendance <<Entity>> {
+    - id: AttendanceId
+    - childId: ChildId
+    - boardingState: BoardingState
+    - boardedAt: LocalDateTime
+    + updateBoardingState(state: BoardingState): void
+    + isBoarded(): boolean
+    + getBoardingTime(): LocalDateTime
+    + getId(): AttendanceId
+  }
+
+  entity "Incident" as Incident <<Entity>> {
+    - id: IncidentId
+    - description: IncidentDescription
+    - reportedAt: LocalDateTime
+    + report(): void
+    + getDescription(): String
+    + getReportedAt(): LocalDateTime
+    + getId(): IncidentId
+  }
+}
+
+package "trip.domain.model.valueobjects" {
+  class "AttendanceId" as AttendanceId <<ValueObject>> {
+    - value: UUID
+    + newId(): AttendanceId
+    + toString(): String
+  }
+
+  class "IncidentId" as IncidentId <<ValueObject>> {
+    - value: UUID
+    + newId(): IncidentId
+    + toString(): String
+  }
+
+  class "TripState" as TripState <<ValueObject>> {
+    - value: String
+    + isPending(): boolean
+    + isInProgress(): boolean
+    + isCompleted(): boolean
+    + toString(): String
+  }
+
+  class "BoardingState" as BoardingState <<ValueObject>> {
+    - value: String
+    + isBoarded(): boolean
+    + isMissing(): boolean
+    + isOmitted(): boolean
+    + toString(): String
+  }
+
+  class "IncidentDescription" as IncidentDescription <<ValueObject>> {
+    - value: String
+    + isValid(): boolean
+    + toString(): String
+  }
+}
+
+package "shared.domain.model.valueobjects" {
+  class "OrganizationId" as SharedOrganizationId <<ValueObject>> {
+  }
+  class "TripId" as SharedTripId <<ValueObject>> {
+  }
+  class "RouteId" as SharedRouteId <<ValueObject>> {
+  }
+  class "DriverId" as SharedDriverId <<ValueObject>> {
+  }
+  class "ChildId" as SharedChildId <<ValueObject>> {
+  }
+}
+
+Trip "1" --> "1" SharedTripId : identified by
+Trip "1" --> "1" SharedOrganizationId : belongs to
+Trip "1" --> "1" SharedRouteId : belongs to
+Trip "1" --> "1" SharedDriverId : operated by
+Trip "1" --> "1" TripState : has
+Trip "1" *--> "0..*" Attendance : contains
+Trip "1" *--> "0..*" Incident : contains
+Attendance "1" --> "1" AttendanceId : identified by
+Attendance "1" --> "1" SharedChildId : tracks
+Attendance "1" --> "1" BoardingState : has
+Incident "1" --> "1" IncidentId : identified by
+Incident "1" --> "1" IncidentDescription : described by
+
+@enduml

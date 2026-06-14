@@ -1,0 +1,135 @@
+@startuml
+skinparam monochrome false
+
+package "stakeholder.domain.model.aggregates" {
+  entity "Parent" as Parent <<AggregateRoot>> {
+    - id: ParentId
+    - organizationId: OrganizationId
+    - userId: UserId
+    - fullName: FullName
+    - email: Email
+    - phoneNumber: PhoneNumber
+    - children: List<Child>
+    + addChild(child: Child): void
+    + removeChild(childId: ChildId): void
+    + getChildren(): List<Child>
+    + getFullName(): String
+    + getEmail(): String
+    + getId(): ParentId
+    + getOrganizationId(): OrganizationId
+  }
+}
+
+package "stakeholder.domain.model.entities" {
+  entity "Driver" as Driver <<Entity>> {
+    - id: DriverId
+    - organizationId: OrganizationId
+    - userId: UserId
+    - fullName: FullName
+    - email: Email
+    - phoneNumber: PhoneNumber
+    - licenseNumber: LicenseNumber
+    + isAvailable(): boolean
+    + getFullName(): String
+    + getLicenseNumber(): String
+    + getId(): DriverId
+    + getOrganizationId(): OrganizationId
+  }
+
+  entity "Child" as Child <<Entity>> {
+    - id: ChildId
+    - fullName: FullName
+    - age: int
+    - enrollmentState: ChildEnrollmentState
+    + enroll(): void
+    + unenroll(): void
+    + isEnrolled(): boolean
+    + getFullName(): String
+    + getId(): ChildId
+  }
+
+  entity "StudentGroup" as StudentGroup <<Entity>> {
+    - id: StudentGroupId
+    - organizationId: OrganizationId
+    - name: String
+    - childIds: List<ChildId>
+    - isFinalized: boolean
+    + addChild(childId: ChildId): void
+    + removeChild(childId: ChildId): void
+    + finalize(): void
+    + getChildCount(): int
+    + isFinalized(): boolean
+    + getId(): StudentGroupId
+  }
+}
+
+package "stakeholder.domain.model.valueobjects" {
+  class "StudentGroupId" as StudentGroupId <<ValueObject>> {
+    - value: UUID
+    + newId(): StudentGroupId
+    + toString(): String
+  }
+
+  class "Email" as Email <<ValueObject>> {
+    - value: String
+    + isValid(): boolean
+    + toString(): String
+  }
+
+  class "PhoneNumber" as PhoneNumber <<ValueObject>> {
+    - value: String
+    + isValid(): boolean
+    + toString(): String
+  }
+
+  class "LicenseNumber" as LicenseNumber <<ValueObject>> {
+    - value: String
+    + isValid(): boolean
+    + toString(): String
+  }
+
+  class "ChildEnrollmentState" as ChildEnrollmentState <<ValueObject>> {
+    - value: String
+    + isActive(): boolean
+    + isInactive(): boolean
+    + toString(): String
+  }
+}
+
+package "shared.domain.model.valueobjects" {
+  class "OrganizationId" as SharedOrganizationId <<ValueObject>> {
+  }
+  class "UserId" as SharedUserId <<ValueObject>> {
+  }
+  class "ParentId" as SharedParentId <<ValueObject>> {
+  }
+  class "DriverId" as SharedDriverId <<ValueObject>> {
+  }
+  class "ChildId" as SharedChildId <<ValueObject>> {
+  }
+  class "FullName" as SharedFullName <<ValueObject>> {
+  }
+}
+
+Parent "1" --> "1" SharedParentId : identified by
+Parent "1" --> "1" SharedOrganizationId : belongs to
+Parent "1" --> "1" SharedUserId : linked to
+Parent "1" --> "1" SharedFullName : has
+Parent "1" --> "1" Email : has
+Parent "1" --> "1" PhoneNumber : has
+Parent "1" *--> "1..*" Child : has
+Driver "1" --> "1" SharedDriverId : identified by
+Driver "1" --> "1" SharedOrganizationId : belongs to
+Driver "1" --> "1" SharedUserId : linked to
+Driver "1" --> "1" SharedFullName : has
+Driver "1" --> "1" Email : has
+Driver "1" --> "1" PhoneNumber : has
+Driver "1" --> "1" LicenseNumber : has
+Child "1" --> "1" SharedChildId : identified by
+Child "1" --> "1" SharedFullName : has
+Child "1" --> "1" ChildEnrollmentState : has
+StudentGroup "1" --> "1" StudentGroupId : identified by
+StudentGroup "1" --> "1" SharedOrganizationId : belongs to
+StudentGroup "1" --> "1..*" SharedChildId : groups
+
+@enduml

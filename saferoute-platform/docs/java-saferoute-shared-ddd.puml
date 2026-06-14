@@ -1,0 +1,87 @@
+@startuml
+skinparam monochrome false
+
+package "shared.domain.model.valueobjects" {
+
+  class "OrganizationId" as OrganizationId <<ValueObject>> {
+    - value: UUID
+    + newId(): OrganizationId
+    + equals(other: OrganizationId): boolean
+    + toString(): String
+  }
+
+  class "UserId" as UserId <<ValueObject>> {
+    - value: UUID
+    + newId(): UserId
+    + equals(other: UserId): boolean
+    + toString(): String
+  }
+
+  class "ParentId" as ParentId <<ValueObject>> {
+    - value: UUID
+    + newId(): ParentId
+    + equals(other: ParentId): boolean
+    + toString(): String
+  }
+
+  class "DriverId" as DriverId <<ValueObject>> {
+    - value: UUID
+    + newId(): DriverId
+    + equals(other: DriverId): boolean
+    + toString(): String
+  }
+
+  class "ChildId" as ChildId <<ValueObject>> {
+    - value: UUID
+    + newId(): ChildId
+    + equals(other: ChildId): boolean
+    + toString(): String
+  }
+
+  class "RouteId" as RouteId <<ValueObject>> {
+    - value: UUID
+    + newId(): RouteId
+    + equals(other: RouteId): boolean
+    + toString(): String
+  }
+
+  class "TripId" as TripId <<ValueObject>> {
+    - value: UUID
+    + newId(): TripId
+    + equals(other: TripId): boolean
+    + toString(): String
+  }
+
+  class "SubscriptionId" as SubscriptionId <<ValueObject>> {
+    - value: UUID
+    + newId(): SubscriptionId
+    + equals(other: SubscriptionId): boolean
+    + toString(): String
+  }
+
+  class "PlanId" as PlanId <<ValueObject>> {
+    - value: UUID
+    + newId(): PlanId
+    + equals(other: PlanId): boolean
+    + toString(): String
+  }
+
+  class "FullName" as FullName <<ValueObject>> {
+    - firstName: String
+    - lastName: String
+    + getFullName(): String
+    + isValid(): boolean
+    + equals(other: FullName): boolean
+    + toString(): String
+  }
+
+  class "Coordinates" as Coordinates <<ValueObject>> {
+    - latitude: Double
+    - longitude: Double
+    + isValid(): boolean
+    + equals(other: Coordinates): boolean
+    + toString(): String
+  }
+}
+
+@enduml

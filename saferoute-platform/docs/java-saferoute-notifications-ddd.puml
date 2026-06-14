@@ -1,0 +1,116 @@
+@startuml
+skinparam monochrome false
+
+package "notifications.domain.model.aggregates" {
+  entity "Notification" as Notification <<AggregateRoot>> {
+    - id: NotificationId
+    - organizationId: OrganizationId
+    - parentId: ParentId
+    - tripId: TripId
+    - category: NotificationCategory
+    - deliveryState: NotificationDeliveryState
+    - message: NotificationMessage
+    - sentAt: LocalDateTime
+    - alerts: List<Alert>
+    - announcements: List<Announcement>
+    + queue(): void
+    + dispatch(): void
+    + markDelivered(): void
+    + isDelivered(): boolean
+    + getCategory(): String
+    + getMessage(): String
+    + getId(): NotificationId
+  }
+}
+
+package "notifications.domain.model.entities" {
+  entity "Alert" as Alert <<Entity>> {
+    - id: AlertId
+    - triggeredAt: LocalDateTime
+    + trigger(): void
+    + getTriggeredAt(): LocalDateTime
+    + isPanic(): boolean
+    + getId(): AlertId
+  }
+
+  entity "Announcement" as Announcement <<Entity>> {
+    - id: AnnouncementId
+    - routeId: RouteId
+    - message: NotificationMessage
+    - publishedAt: LocalDateTime
+    + publish(): void
+    + getMessage(): String
+    + getPublishedAt(): LocalDateTime
+    + getId(): AnnouncementId
+  }
+}
+
+package "notifications.domain.model.valueobjects" {
+  class "NotificationId" as NotificationId <<ValueObject>> {
+    - value: UUID
+    + newId(): NotificationId
+    + toString(): String
+  }
+
+  class "AlertId" as AlertId <<ValueObject>> {
+    - value: UUID
+    + newId(): AlertId
+    + toString(): String
+  }
+
+  class "AnnouncementId" as AnnouncementId <<ValueObject>> {
+    - value: UUID
+    + newId(): AnnouncementId
+    + toString(): String
+  }
+
+  class "NotificationCategory" as NotificationCategory <<ValueObject>> {
+    - value: String
+    + isBoarding(): boolean
+    + isArrival(): boolean
+    + isIncident(): boolean
+    + isPanic(): boolean
+    + toString(): String
+  }
+
+  class "NotificationDeliveryState" as NotificationDeliveryState <<ValueObject>> {
+    - value: String
+    + isQueued(): boolean
+    + isDispatched(): boolean
+    + isDelivered(): boolean
+    + toString(): String
+  }
+
+  class "NotificationMessage" as NotificationMessage <<ValueObject>> {
+    - content: String
+    + isValid(): boolean
+    + toString(): String
+  }
+}
+
+package "shared.domain.model.valueobjects" {
+  class "OrganizationId" as SharedOrganizationId <<ValueObject>> {
+  }
+  class "ParentId" as SharedParentId <<ValueObject>> {
+  }
+  class "TripId" as SharedTripId <<ValueObject>> {
+  }
+  class "RouteId" as SharedRouteId <<ValueObject>> {
+  }
+}
+
+Notification "1" --> "1" NotificationId : identified by
+Notification "1" --> "1" SharedOrganizationId : belongs to
+Notification "1" --> "1" SharedParentId : sent to
+Notification "1" --> "1" SharedTripId : related to
+Notification "1" --> "1" NotificationCategory : categorized by
+Notification "1" --> "1" NotificationDeliveryState : has
+Notification "1" --> "1" NotificationMessage : contains
+Notification "1" *--> "0..*" Alert : contains
+Notification "1" *--> "0..*" Announcement : contains
+Alert "1" --> "1" AlertId : identified by
+Announcement "1" --> "1" AnnouncementId : identified by
+Announcement "1" --> "1" SharedRouteId : belongs to
+Announcement "1" --> "1" NotificationMessage : contains
+
+@enduml

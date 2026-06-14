@@ -1,0 +1,144 @@
+@startuml
+skinparam monochrome false
+
+package "fleet.domain.model.aggregates" {
+  entity "Route" as Route <<AggregateRoot>> {
+    - id: RouteId
+    - organizationId: OrganizationId
+    - name: String
+    - routeState: RouteState
+    - departureTime: DepartureTime
+    - serviceDays: ServiceDays
+    - vehicle: Vehicle
+    - assignment: Assignment
+    - stops: List<Stop>
+    + defineRoute(name: String): void
+    + addStop(stop: Stop): void
+    + removeStop(stopId: StopId): void
+    + activate(): void
+    + deactivate(): void
+    + getStopSequence(): List<Stop>
+    + getTotalStops(): int
+    + getId(): RouteId
+  }
+}
+
+package "fleet.domain.model.entities" {
+  entity "Stop" as Stop <<Entity>> {
+    - id: StopId
+    - name: String
+    - coordinates: Coordinates
+    - stopOrder: StopOrder
+    + getNextStop(): Stop
+    + isFirst(): boolean
+    + isLast(): boolean
+    + updateCoordinates(coordinates: Coordinates): void
+    + getId(): StopId
+  }
+
+  entity "Vehicle" as Vehicle <<Entity>> {
+    - id: VehicleId
+    - organizationId: OrganizationId
+    - plate: String
+    - model: String
+    - brand: String
+    - capacity: int
+    + isAvailable(): boolean
+    + getPlate(): String
+    + getCapacity(): int
+    + updateDetails(model: String, brand: String): void
+    + getId(): VehicleId
+  }
+
+  entity "Assignment" as Assignment <<Entity>> {
+    - id: AssignmentId
+    - driverId: DriverId
+    - childIds: List<ChildId>
+    + assignDriver(driverId: DriverId): void
+    + assignChild(childId: ChildId): void
+    + removeChild(childId: ChildId): void
+    + getDriverId(): DriverId
+    + getChildCount(): int
+    + getId(): AssignmentId
+  }
+}
+
+package "fleet.domain.model.valueobjects" {
+  class "StopId" as StopId <<ValueObject>> {
+    - value: UUID
+    + newId(): StopId
+    + toString(): String
+  }
+
+  class "VehicleId" as VehicleId <<ValueObject>> {
+    - value: UUID
+    + newId(): VehicleId
+    + toString(): String
+  }
+
+  class "AssignmentId" as AssignmentId <<ValueObject>> {
+    - value: UUID
+    + newId(): AssignmentId
+    + toString(): String
+  }
+
+  class "RouteState" as RouteState <<ValueObject>> {
+    - value: String
+    + isDraft(): boolean
+    + isActive(): boolean
+    + isInactive(): boolean
+    + toString(): String
+  }
+
+  class "StopOrder" as StopOrder <<ValueObject>> {
+    - position: int
+    + isFirst(): boolean
+    + isLast(): boolean
+    + getPosition(): int
+  }
+
+  class "DepartureTime" as DepartureTime <<ValueObject>> {
+    - value: LocalTime
+    + isValid(): boolean
+    + toString(): String
+  }
+
+  class "ServiceDays" as ServiceDays <<ValueObject>> {
+    - days: List<String>
+    + includesDay(day: String): boolean
+    + getDays(): List<String>
+    + isValid(): boolean
+  }
+}
+
+package "shared.domain.model.valueobjects" {
+  class "OrganizationId" as SharedOrganizationId <<ValueObject>> {
+  }
+  class "RouteId" as SharedRouteId <<ValueObject>> {
+  }
+  class "DriverId" as SharedDriverId <<ValueObject>> {
+  }
+  class "ChildId" as SharedChildId <<ValueObject>> {
+  }
+  class "Coordinates" as SharedCoordinates <<ValueObject>> {
+  }
+}
+
+Route "1" --> "1" SharedRouteId : identified by
+Route "1" --> "1" SharedOrganizationId : belongs to
+Route "1" --> "1" RouteState : has
+Route "1" --> "1" DepartureTime : has
+Route "1" --> "1" ServiceDays : has
+Route "1" --> "1" Vehicle : assigned to
+Route "1" --> "1" Assignment : has
+Route "1" *--> "1..*" Stop : has
+Stop "1" --> "1" StopId : identified by
+Stop "1" --> "1" SharedCoordinates : located at
+Stop "1" --> "1" StopOrder : ordered by
+Vehicle "1" --> "1" VehicleId : identified by
+Vehicle "1" --> "1" SharedOrganizationId : belongs to
+Assignment "1" --> "1" AssignmentId : identified by
+Assignment "1" --> "1" SharedDriverId : assigned to
+Assignment "1" --> "1..*" SharedChildId : includes
+
+@enduml
