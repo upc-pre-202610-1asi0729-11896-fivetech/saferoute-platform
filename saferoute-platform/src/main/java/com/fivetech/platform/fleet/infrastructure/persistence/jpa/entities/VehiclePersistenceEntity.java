@@ -1,7 +1,7 @@
-package com.acme.saferoute.platform.fleet.infrastructure.persistence.jpa.entities;
+package com.fivetech.platform.fleet.infrastructure.jpa.entities;
 
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
-import com.acme.saferoute.platform.fleet.domain.model.valueobjects.VehicleStatus;
+import com.fivetech.platform.fleet.domain.model.valueobjects.VehicleStatus;
 import com.acme.saferoute.platform.fleet.infrastructure.persistence.jpa.converters.OrganizationIdConverter;
 import com.acme.saferoute.platform.shared.infrastructure.persistence.jpa.entities.AuditableAbstractPersistenceEntity;
 import jakarta.persistence.*;

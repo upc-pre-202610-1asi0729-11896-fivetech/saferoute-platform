@@ -1,6 +1,6 @@
-package com.acme.saferoute.platform.fleet.infrastructure.persistence.jpa.converters;
+package com.fivetech.platform.fleet.infrastructure.jpa.converters;
 
-import com.acme.saferoute.platform.fleet.domain.model.valueobjects.VehicleId;
+import com.fivetech.platform.fleet.domain.model.valueobjects.VehicleId;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

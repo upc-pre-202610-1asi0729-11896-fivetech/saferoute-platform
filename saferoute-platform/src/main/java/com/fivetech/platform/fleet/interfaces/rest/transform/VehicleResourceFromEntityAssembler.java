@@ -1,7 +1,7 @@
-package com.acme.saferoute.platform.fleet.interfaces.rest.transform;
+package com.fivetech.platform.fleet.rest.transform;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.interfaces.rest.resources.VehicleResource;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.rest.resources.VehicleResource;
 
 /**
  * Assembler converting a {@link Vehicle} aggregate into its flat {@link VehicleResource} output form.

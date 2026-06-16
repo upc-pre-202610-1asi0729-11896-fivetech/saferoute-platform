@@ -1,7 +1,7 @@
-package com.acme.saferoute.platform.fleet.infrastructure.persistence.jpa.assemblers;
+package com.fivetech.platform.fleet.infrastructure.jpa.assemblers;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.infrastructure.persistence.jpa.entities.VehiclePersistenceEntity;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.infrastructure.jpa.entities.VehiclePersistenceEntity;
 
 /**
  * Static assembler that maps between the {@link Vehicle} domain aggregate and its

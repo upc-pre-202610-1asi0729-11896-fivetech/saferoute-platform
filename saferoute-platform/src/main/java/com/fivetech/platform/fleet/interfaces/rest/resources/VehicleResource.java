@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.interfaces.rest.resources;
+package com.fivetech.platform.fleet.rest.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
