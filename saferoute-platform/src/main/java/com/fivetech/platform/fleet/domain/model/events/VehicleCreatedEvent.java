@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.events;
+package com.fivetech.platform.fleet.domain.model.events;
 
 /**
  * Domain event published when a new vehicle has been registered and persisted.

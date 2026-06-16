@@ -1,9 +1,9 @@
-package com.acme.saferoute.platform.fleet.application.commandservices;
+package com.fivetech.platform.fleet.application.commandservices;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.domain.model.commands.CreateVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.commands.DeleteVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.commands.UpdateVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.domain.model.commands.CreateVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.commands.DeleteVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.commands.UpdateVehicleCommand;
 import com.acme.saferoute.platform.shared.application.result.ApplicationError;
 import com.acme.saferoute.platform.shared.application.result.Result;
 

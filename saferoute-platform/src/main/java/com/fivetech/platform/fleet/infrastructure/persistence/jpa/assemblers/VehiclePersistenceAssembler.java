@@ -1,7 +1,7 @@
-package com.fivetech.platform.fleet.infrastructure.jpa.assemblers;
+package com.fivetech.platform.fleet.infrastructure.persistence.jpa.assemblers;
 
 import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
-import com.fivetech.platform.fleet.infrastructure.jpa.entities.VehiclePersistenceEntity;
+import com.fivetech.platform.fleet.infrastructure.persistence.jpa.entities.VehiclePersistenceEntity;
 
 /**
  * Static assembler that maps between the {@link Vehicle} domain aggregate and its

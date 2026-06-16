@@ -1,11 +1,11 @@
-package com.acme.saferoute.platform.fleet.application.internal.queryservices;
+package com.fivetech.platform.fleet.application.internal.queryservices;
 
-import com.acme.saferoute.platform.fleet.application.queryservices.VehicleQueryService;
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
+import com.fivetech.platform.fleet.application.queryservices.VehicleQueryService;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
+import com.fivetech.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
-import com.acme.saferoute.platform.fleet.domain.repositories.VehicleRepository;
+import com.fivetech.platform.fleet.domain.repositories.VehicleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.acme.saferoute.platform.fleet.application.queryservices;
+package com.fivetech.platform.fleet.application.queryservices;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
+import com.fivetech.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
 
 import java.util.List;
 import java.util.Optional;

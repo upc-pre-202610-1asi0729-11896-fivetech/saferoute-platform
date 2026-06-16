@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.valueobjects;
+package com.fivetech.platform.fleet.domain.model.valueobjects;
 
 /**
  * Value object referencing a {@code Vehicle} aggregate from within other Fleet aggregates

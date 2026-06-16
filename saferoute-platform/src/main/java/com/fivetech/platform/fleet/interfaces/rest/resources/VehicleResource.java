@@ -1,4 +1,4 @@
-package com.fivetech.platform.fleet.rest.resources;
+package com.fivetech.platform.fleet.interfaces.rest.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;

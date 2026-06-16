@@ -1,12 +1,12 @@
-package com.acme.saferoute.platform.fleet.application.internal.commandservices;
+package com.fivetech.platform.fleet.application.internal.commandservices;
 
-import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
-import com.acme.saferoute.platform.fleet.domain.model.commands.CreateVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.commands.DeleteVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.commands.UpdateVehicleCommand;
+import com.fivetech.platform.fleet.application.commandservices.VehicleCommandService;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.domain.model.commands.CreateVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.commands.DeleteVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.commands.UpdateVehicleCommand;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
-import com.acme.saferoute.platform.fleet.domain.repositories.VehicleRepository;
+import com.fivetech.platform.fleet.domain.repositories.VehicleRepository;
 import com.acme.saferoute.platform.shared.application.result.ApplicationError;
 import com.acme.saferoute.platform.shared.application.result.Result;
 import org.springframework.stereotype.Service;

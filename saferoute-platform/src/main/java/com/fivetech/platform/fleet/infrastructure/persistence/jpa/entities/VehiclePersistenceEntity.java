@@ -1,4 +1,4 @@
-package com.fivetech.platform.fleet.infrastructure.jpa.entities;
+package com.fivetech.platform.fleet.infrastructure.persistence.jpa.entities;
 
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
 import com.fivetech.platform.fleet.domain.model.valueobjects.VehicleStatus;

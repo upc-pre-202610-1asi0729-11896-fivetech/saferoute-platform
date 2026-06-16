@@ -1,7 +1,7 @@
-package com.fivetech.platform.fleet.rest.transform;
+package com.fivetech.platform.fleet.interfaces.rest.transform;
 
 import com.fivetech.platform.fleet.domain.model.commands.UpdateVehicleCommand;
-import com.fivetech.platform.fleet.rest.resources.VehicleResource;
+import com.fivetech.platform.fleet.interfaces.rest.resources.VehicleResource;
 
 /**
  * Assembler converting a flat {@link VehicleResource} (plus the vehicle id from the URL path) into

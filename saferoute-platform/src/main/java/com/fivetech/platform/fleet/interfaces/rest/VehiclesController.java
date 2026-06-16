@@ -1,14 +1,14 @@
-package com.fivetech.platform.fleet.rest;
+package com.fivetech.platform.fleet.interfaces.rest;
 
 import com.fivetech.platform.fleet.application.commandservices.VehicleCommandService;
 import com.fivetech.platform.fleet.application.queryservices.VehicleQueryService;
 import com.fivetech.platform.fleet.domain.model.commands.DeleteVehicleCommand;
 import com.fivetech.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
 import com.fivetech.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
-import com.fivetech.platform.fleet.rest.resources.VehicleResource;
-import com.fivetech.platform.fleet.rest.transform.CreateVehicleCommandFromResourceAssembler;
-import com.fivetech.platform.fleet.rest.transform.UpdateVehicleCommandFromResourceAssembler;
-import com.fivetech.platform.fleet.rest.transform.VehicleResourceFromEntityAssembler;
+import com.fivetech.platform.fleet.interfaces.rest.resources.VehicleResource;
+import com.fivetech.platform.fleet.interfaces.rest.transform.CreateVehicleCommandFromResourceAssembler;
+import com.fivetech.platform.fleet.interfaces.rest.transform.UpdateVehicleCommandFromResourceAssembler;
+import com.fivetech.platform.fleet.interfaces.rest.transform.VehicleResourceFromEntityAssembler;
 import com.acme.saferoute.platform.shared.application.result.ApplicationError;
 import com.acme.saferoute.platform.shared.application.result.Result;
 import com.acme.saferoute.platform.shared.interfaces.rest.transform.ErrorResponseAssembler;

@@ -1,6 +1,6 @@
-package com.acme.saferoute.platform.fleet.domain.repositories;
+package com.fivetech.platform.fleet.domain.repositories;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
+import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
 
 import java.util.List;

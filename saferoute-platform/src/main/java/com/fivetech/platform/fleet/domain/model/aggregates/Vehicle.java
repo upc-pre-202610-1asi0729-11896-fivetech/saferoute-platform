@@ -1,10 +1,10 @@
-package com.acme.saferoute.platform.fleet.domain.model.aggregates;
+package com.fivetech.platform.fleet.domain.model.aggregates;
 
-import com.acme.saferoute.platform.fleet.domain.model.commands.CreateVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.commands.UpdateVehicleCommand;
-import com.acme.saferoute.platform.fleet.domain.model.events.VehicleCreatedEvent;
+import com.fivetech.platform.fleet.domain.model.commands.CreateVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.commands.UpdateVehicleCommand;
+import com.fivetech.platform.fleet.domain.model.events.VehicleCreatedEvent;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
-import com.acme.saferoute.platform.fleet.domain.model.valueobjects.VehicleStatus;
+import com.fivetech.platform.fleet.domain.model.valueobjects.VehicleStatus;
 import com.acme.saferoute.platform.shared.domain.model.aggregates.AbstractDomainAggregateRoot;
 import lombok.Getter;
 

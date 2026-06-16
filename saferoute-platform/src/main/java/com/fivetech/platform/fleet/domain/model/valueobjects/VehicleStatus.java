@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.valueobjects;
+package com.fivetech.platform.fleet.domain.model.valueobjects;
 
 /**
  * Enumeration representing the operational status of a {@code Vehicle}.

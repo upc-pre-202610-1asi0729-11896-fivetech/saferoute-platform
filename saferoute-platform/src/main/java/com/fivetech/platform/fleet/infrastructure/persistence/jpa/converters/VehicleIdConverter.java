@@ -1,4 +1,4 @@
-package com.fivetech.platform.fleet.infrastructure.jpa.converters;
+package com.fivetech.platform.fleet.infrastructure.persistence.jpa.converters;
 
 import com.fivetech.platform.fleet.domain.model.valueobjects.VehicleId;
 import jakarta.persistence.AttributeConverter;

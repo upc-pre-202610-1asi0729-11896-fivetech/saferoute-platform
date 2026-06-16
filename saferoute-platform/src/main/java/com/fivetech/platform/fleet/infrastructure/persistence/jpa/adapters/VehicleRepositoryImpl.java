@@ -1,10 +1,10 @@
-package com.fivetech.platform.fleet.infrastructure.jpa.adapters;
+package com.fivetech.platform.fleet.infrastructure.persistence.jpa.adapters;
 
 import com.fivetech.platform.fleet.domain.model.aggregates.Vehicle;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
 import com.fivetech.platform.fleet.domain.repositories.VehicleRepository;
-import com.fivetech.platform.fleet.infrastructure.jpa.assemblers.VehiclePersistenceAssembler;
-import com.fivetech.platform.fleet.infrastructure.jpa.repositories.VehiclePersistenceRepository;
+import com.fivetech.platform.fleet.infrastructure.persistence.jpa.assemblers.VehiclePersistenceAssembler;
+import com.fivetech.platform.fleet.infrastructure.persistence.jpa.repositories.VehiclePersistenceRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Repository;
 

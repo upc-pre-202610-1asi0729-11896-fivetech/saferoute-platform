@@ -1,7 +1,7 @@
-package com.fivetech.platform.fleet.infrastructure.jpa.repositories;
+package com.fivetech.platform.fleet.infrastructure.persistence.jpa.repositories;
 
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
-import com.fivetech.platform.fleet.infrastructure.jpa.entities.VehiclePersistenceEntity;
+import com.fivetech.platform.fleet.infrastructure.persistence.jpa.entities.VehiclePersistenceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

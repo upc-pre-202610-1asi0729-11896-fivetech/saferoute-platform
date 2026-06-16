@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.queries;
+package com.fivetech.platform.fleet.domain.model.queries;
 
 /**
  * Query to retrieve all vehicles owned by a given organization.
