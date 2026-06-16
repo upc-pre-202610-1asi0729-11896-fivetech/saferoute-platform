@@ -1,12 +1,17 @@
 package com.acme.saferoute.platform.fleet.interfaces.rest;
 
 import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
+import com.acme.saferoute.platform.fleet.domain.model.commands.DeleteVehicleCommand;
 import com.acme.saferoute.platform.fleet.interfaces.rest.resources.VehicleResource;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.CreateVehicleCommandFromResourceAssembler;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.UpdateVehicleCommandFromResourceAssembler;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.VehicleResourceFromEntityAssembler;
+import com.acme.saferoute.platform.shared.application.result.ApplicationError;
+import com.acme.saferoute.platform.shared.application.result.Result;
+import com.acme.saferoute.platform.shared.interfaces.rest.transform.ErrorResponseAssembler;
 import com.acme.saferoute.platform.shared.interfaces.rest.transform.ResponseEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -88,5 +93,28 @@ public class VehiclesController {
                 result,
                 VehicleResourceFromEntityAssembler::toResourceFromEntity,
                 HttpStatus.OK);
+    }
+
+    /**
+     * Deletes a vehicle by its identifier.
+     *
+     * @param vehicleId the vehicle identifier
+     * @return 204 on success, or a 404 error response
+     */
+    @DeleteMapping("/{vehicleId}")
+    @Operation(summary = "Delete a vehicle", description = "Deletes a vehicle by its identifier.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vehicle deleted"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<?> deleteVehicle(
+            @Parameter(description = "Vehicle identifier", example = "1", required = true)
+            @PathVariable Long vehicleId) {
+        var result = vehicleCommandService.handle(new DeleteVehicleCommand(vehicleId));
+        if (result.isFailure()) {
+            return ErrorResponseAssembler.toErrorResponseFromApplicationError(
+                    ((Result.Failure<Long, ApplicationError>) result).error());
+        }
+        return ResponseEntity.noContent().build();
     }
 }

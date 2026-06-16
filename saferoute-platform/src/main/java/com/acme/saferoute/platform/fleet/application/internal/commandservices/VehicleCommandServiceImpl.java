@@ -3,6 +3,7 @@ package com.acme.saferoute.platform.fleet.application.internal.commandservices;
 import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
 import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
 import com.acme.saferoute.platform.fleet.domain.model.commands.CreateVehicleCommand;
+import com.acme.saferoute.platform.fleet.domain.model.commands.DeleteVehicleCommand;
 import com.acme.saferoute.platform.fleet.domain.model.commands.UpdateVehicleCommand;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
 import com.acme.saferoute.platform.fleet.domain.repositories.VehicleRepository;
@@ -70,6 +71,20 @@ public class VehicleCommandServiceImpl implements VehicleCommandService {
             return Result.failure(ApplicationError.validationError("Vehicle", e.getMessage()));
         } catch (Exception e) {
             return Result.failure(ApplicationError.unexpected("Vehicle update", e.getMessage()));
+        }
+    }
+
+    // inherited javadoc
+    @Override
+    public Result<Long, ApplicationError> handle(DeleteVehicleCommand command) {
+        try {
+            if (!vehicleRepository.existsById(command.vehicleId())) {
+                return Result.failure(ApplicationError.notFound("Vehicle", String.valueOf(command.vehicleId())));
+            }
+            vehicleRepository.deleteById(command.vehicleId());
+            return Result.success(command.vehicleId());
+        } catch (Exception e) {
+            return Result.failure(ApplicationError.unexpected("Vehicle deletion", e.getMessage()));
         }
     }
 }
