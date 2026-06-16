@@ -1,7 +1,10 @@
 package com.acme.saferoute.platform.fleet.interfaces.rest;
 
 import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
+import com.acme.saferoute.platform.fleet.application.queryservices.VehicleQueryService;
 import com.acme.saferoute.platform.fleet.domain.model.commands.DeleteVehicleCommand;
+import com.acme.saferoute.platform.fleet.domain.model.queries.GetAllVehiclesByOrganizationIdQuery;
+import com.acme.saferoute.platform.fleet.domain.model.queries.GetVehicleByIdQuery;
 import com.acme.saferoute.platform.fleet.interfaces.rest.resources.VehicleResource;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.CreateVehicleCommandFromResourceAssembler;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.UpdateVehicleCommandFromResourceAssembler;
@@ -23,6 +26,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * REST controller exposing vehicle management endpoints for the Fleet bounded context.
  *
@@ -35,14 +40,17 @@ import org.springframework.web.bind.annotation.*;
 public class VehiclesController {
 
     private final VehicleCommandService vehicleCommandService;
+    private final VehicleQueryService vehicleQueryService;
 
     /**
      * Creates the controller with the vehicle application services.
      *
      * @param vehicleCommandService the vehicle command service
+     * @param vehicleQueryService   the vehicle query service
      */
-    public VehiclesController(VehicleCommandService vehicleCommandService) {
+    public VehiclesController(VehicleCommandService vehicleCommandService, VehicleQueryService vehicleQueryService) {
         this.vehicleCommandService = vehicleCommandService;
+        this.vehicleQueryService = vehicleQueryService;
     }
 
     /**
@@ -93,6 +101,52 @@ public class VehiclesController {
                 result,
                 VehicleResourceFromEntityAssembler::toResourceFromEntity,
                 HttpStatus.OK);
+    }
+
+    /**
+     * Lists vehicles, optionally filtered by organization.
+     *
+     * @param organizationId the owning organization identifier (optional)
+     * @return the list of vehicle resources
+     */
+    @GetMapping
+    @Operation(summary = "Get vehicles", description = "Retrieves vehicles, optionally filtered by organization.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vehicles found",
+                    content = @Content(schema = @Schema(implementation = VehicleResource.class)))
+    })
+    public ResponseEntity<List<VehicleResource>> getVehicles(
+            @Parameter(description = "Owning organization identifier", example = "1")
+            @RequestParam(required = false) Long organizationId) {
+        List<Vehicle> vehicles = organizationId == null
+                ? List.of()
+                : vehicleQueryService.handle(new GetAllVehiclesByOrganizationIdQuery(organizationId));
+        var resources = vehicles.stream().map(VehicleResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(resources);
+    }
+
+    /**
+     * Retrieves a single vehicle by its identifier.
+     *
+     * @param vehicleId the vehicle identifier
+     * @return the vehicle resource, or a 404 error response
+     */
+    @GetMapping("/{vehicleId}")
+    @Operation(summary = "Get vehicle by id", description = "Retrieves a vehicle by its unique identifier.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vehicle found",
+                    content = @Content(schema = @Schema(implementation = VehicleResource.class))),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<?> getVehicleById(
+            @Parameter(description = "Vehicle identifier", example = "1", required = true)
+            @PathVariable Long vehicleId) {
+        var vehicle = vehicleQueryService.handle(new GetVehicleByIdQuery(vehicleId));
+        if (vehicle.isEmpty()) {
+            return ErrorResponseAssembler.toErrorResponseFromApplicationError(
+                    ApplicationError.notFound("Vehicle", vehicleId.toString()));
+        }
+        return ResponseEntity.ok(VehicleResourceFromEntityAssembler.toResourceFromEntity(vehicle.get()));
     }
 
     /**
