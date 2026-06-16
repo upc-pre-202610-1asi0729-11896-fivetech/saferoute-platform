@@ -3,6 +3,7 @@ package com.acme.saferoute.platform.fleet.interfaces.rest;
 import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
 import com.acme.saferoute.platform.fleet.interfaces.rest.resources.VehicleResource;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.CreateVehicleCommandFromResourceAssembler;
+import com.acme.saferoute.platform.fleet.interfaces.rest.transform.UpdateVehicleCommandFromResourceAssembler;
 import com.acme.saferoute.platform.fleet.interfaces.rest.transform.VehicleResourceFromEntityAssembler;
 import com.acme.saferoute.platform.shared.interfaces.rest.transform.ResponseEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,5 +61,32 @@ public class VehiclesController {
                 result,
                 VehicleResourceFromEntityAssembler::toResourceFromEntity,
                 HttpStatus.CREATED);
+    }
+
+    /**
+     * Updates an existing vehicle.
+     *
+     * @param vehicleId the vehicle identifier from the path
+     * @param resource  the vehicle payload
+     * @return the updated vehicle resource, or an error response
+     */
+    @PutMapping("/{vehicleId}")
+    @Operation(summary = "Update a vehicle", description = "Updates a vehicle's information.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Vehicle updated",
+                    content = @Content(schema = @Schema(implementation = VehicleResource.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<?> updateVehicle(
+            @Parameter(description = "Vehicle identifier", example = "1", required = true)
+            @PathVariable Long vehicleId,
+            @Valid @RequestBody VehicleResource resource) {
+        var command = UpdateVehicleCommandFromResourceAssembler.toCommandFromResource(vehicleId, resource);
+        var result = vehicleCommandService.handle(command);
+        return ResponseEntityAssembler.toResponseEntityFromResult(
+                result,
+                VehicleResourceFromEntityAssembler::toResourceFromEntity,
+                HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package com.acme.saferoute.platform.fleet.application.internal.commandservices;
 import com.acme.saferoute.platform.fleet.application.commandservices.VehicleCommandService;
 import com.acme.saferoute.platform.fleet.domain.model.aggregates.Vehicle;
 import com.acme.saferoute.platform.fleet.domain.model.commands.CreateVehicleCommand;
+import com.acme.saferoute.platform.fleet.domain.model.commands.UpdateVehicleCommand;
 import com.acme.saferoute.platform.fleet.domain.model.valueobjects.OrganizationId;
 import com.acme.saferoute.platform.fleet.domain.repositories.VehicleRepository;
 import com.acme.saferoute.platform.shared.application.result.ApplicationError;
@@ -50,6 +51,25 @@ public class VehicleCommandServiceImpl implements VehicleCommandService {
             return Result.failure(ApplicationError.validationError("Vehicle", e.getMessage()));
         } catch (Exception e) {
             return Result.failure(ApplicationError.unexpected("Vehicle creation", e.getMessage()));
+        }
+    }
+
+    // inherited javadoc
+    @Override
+    public Result<Vehicle, ApplicationError> handle(UpdateVehicleCommand command) {
+        try {
+            var vehicleOptional = vehicleRepository.findById(command.vehicleId());
+            if (vehicleOptional.isEmpty()) {
+                return Result.failure(ApplicationError.notFound("Vehicle", String.valueOf(command.vehicleId())));
+            }
+            var vehicle = vehicleOptional.get();
+            vehicle.updateInformation(command);
+            var savedVehicle = vehicleRepository.save(vehicle);
+            return Result.success(savedVehicle);
+        } catch (IllegalArgumentException e) {
+            return Result.failure(ApplicationError.validationError("Vehicle", e.getMessage()));
+        } catch (Exception e) {
+            return Result.failure(ApplicationError.unexpected("Vehicle update", e.getMessage()));
         }
     }
 }
