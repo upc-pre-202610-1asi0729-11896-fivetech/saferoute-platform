@@ -196,8 +196,7 @@ public class Route extends AbstractDomainAggregateRoot<Route> {
      * Activates the route (US-6).
      *
      * <p>Business rule: only a route currently in DRAFT may be activated; activating an already
-     * active or inactive route is rejected. Registers a {@link RouteActivatedEvent} on success.</p>
-     *
+     * active or inactive route is rejected.
      * @throws IllegalStateException if the route is not in DRAFT state
      */
     public void activate() {
