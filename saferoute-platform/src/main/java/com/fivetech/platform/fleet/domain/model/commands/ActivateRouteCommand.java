@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.commands;
+package com.fivetech.platform.fleet.domain.model.commands;
 
 /**
  * Command expressing the intent to activate a route (US-6: transition DRAFT to ACTIVE).

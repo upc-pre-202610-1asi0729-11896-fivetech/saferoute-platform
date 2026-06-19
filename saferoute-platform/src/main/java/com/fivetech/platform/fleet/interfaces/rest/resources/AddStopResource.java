@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.interfaces.rest.resources;
+package com.fivetech.platform.fleet.interfaces.rest.resources;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

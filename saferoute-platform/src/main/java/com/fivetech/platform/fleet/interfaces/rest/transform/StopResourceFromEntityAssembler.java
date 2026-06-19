@@ -1,7 +1,7 @@
-package com.acme.saferoute.platform.fleet.interfaces.rest.transform;
+package com.fivetech.platform.fleet.interfaces.rest.transform;
 
-import com.acme.saferoute.platform.fleet.domain.model.entities.Stop;
-import com.acme.saferoute.platform.fleet.interfaces.rest.resources.StopResource;
+import com.fivetech.platform.fleet.domain.model.entities.Stop;
+import com.fivetech.platform.fleet.interfaces.rest.resources.StopResource;
 
 /**
  * Assembler converting a {@link Stop} domain entity into its {@link StopResource} output form.

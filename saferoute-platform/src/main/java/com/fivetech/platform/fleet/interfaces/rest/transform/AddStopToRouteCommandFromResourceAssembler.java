@@ -1,7 +1,7 @@
-package com.acme.saferoute.platform.fleet.interfaces.rest.transform;
+package com.fivetech.platform.fleet.interfaces.rest.transform;
 
-import com.acme.saferoute.platform.fleet.domain.model.commands.AddStopToRouteCommand;
-import com.acme.saferoute.platform.fleet.interfaces.rest.resources.AddStopResource;
+import com.fivetech.platform.fleet.domain.model.commands.AddStopToRouteCommand;
+import com.fivetech.platform.fleet.interfaces.rest.resources.AddStopResource;
 
 /**
  * Assembler converting an {@link AddStopResource} (plus the route id from the URL path) into an
