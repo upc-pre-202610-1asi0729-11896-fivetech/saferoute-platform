@@ -1,10 +1,10 @@
-package com.acme.saferoute.platform.fleet.application.queryservices;
+package com.fivetech.platform.fleet.application.queryservices;
 
-import com.acme.saferoute.platform.fleet.domain.model.aggregates.Route;
-import com.acme.saferoute.platform.fleet.domain.model.entities.Stop;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetAllRoutesByOrganizationIdQuery;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetRouteByIdQuery;
-import com.acme.saferoute.platform.fleet.domain.model.queries.GetStopsByRouteIdQuery;
+import com.fivetech.platform.fleet.domain.model.aggregates.Route;
+import com.fivetech.platform.fleet.domain.model.entities.Stop;
+import com.fivetech.platform.fleet.domain.model.queries.GetAllRoutesByOrganizationIdQuery;
+import com.fivetech.platform.fleet.domain.model.queries.GetRouteByIdQuery;
+import com.fivetech.platform.fleet.domain.model.queries.GetStopsByRouteIdQuery;
 
 import java.util.List;
 import java.util.Optional;
