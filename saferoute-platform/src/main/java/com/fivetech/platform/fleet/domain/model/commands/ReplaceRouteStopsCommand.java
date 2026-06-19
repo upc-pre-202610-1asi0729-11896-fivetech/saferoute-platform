@@ -1,4 +1,4 @@
-package com.acme.saferoute.platform.fleet.domain.model.commands;
+package com.fivetech.platform.fleet.domain.model.commands;
 
 import java.util.List;
 
